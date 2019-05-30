@@ -1,0 +1,94 @@
+Clase de Exceptions 
+import net.serenitybdd.core.exceptions.SerenityManagedException;
+
+public class BdIseriesOracleException extends SerenityManagedException {
+
+	private static final long serialVersionUID = 1L;
+	public static final String EXCEPTION_MENSAJE_QUESTION_COMPARE = "error en la consulta de iseries en la clase Comparar";
+	public static final String EXCEPTION_MENSAJE_QUESTION_BANNER = "error en la consulta de iseries en la clase QuestionBanner";
+	public static final String EXCEPTION_MENSAJE_QUESTION_CONFIRM_NOMBRE_USUARIO = "error en la consulta de iseries en la clase ConfirmarNombreUsuario";
+	public static final String EXCEPTION_CONSULTABD_ISERIES_CREDENCIALES = "error en las credenciales Bd Iseries";
+	public static final String EXCEPTION_CONSULTABD_ISERIES_QUERY = "error en QUERY consulta  Bd Iseries";
+	public static final String EXCEPTION_CONSULTABD_ORACLE_CREDENCIALES = "error en las credenciales Bd Oracle";
+	public static final String EXCEPTION_CONSULTABD_ORACLE_QUERY = "error en QUERY consulta  Bd Oracle";
+
+	public BdIseriesOracleException(String mensaje, Throwable test) {
+		super(mensaje, test);
+	}
+
+}
+
+
+se implementa de la siguiente manera en una questions
+
+try {
+
+	} catch (IOException e) {
+			new BdIseriesOracleException(BdIseriesOracleException.EXCEPTION_MENSAJE_QUESTION_COMPARE, e);
+		}
+		
+		
+Estructura de una question
+
+import co.com.bancolombia.creditopyme.util.SeeTextInfo;
+import net.serenitybdd.core.Serenity;
+import net.serenitybdd.screenplay.Actor;
+import net.serenitybdd.screenplay.Question;
+
+public class QuestionInfoRCP implements Question<Boolean> {
+
+	SeeTextInfo seeTextInfo = new SeeTextInfo();
+	private String rcpText = "Sobregiro\n" 
+	@Override
+	public Boolean answeredBy(Actor actor) {
+
+		String rcp = Serenity.sessionVariableCalled("rcp");
+		
+		return this.rcpText.equalsIgnoreCase(rcp);
+	}
+
+	public static QuestionInfoRCP infoRCP() {
+		return new QuestionInfoRCP();
+	}
+
+}
+
+
+StepDefinitions 
+
+@Then("the user sees the credits line information box expand or reduce")
+	public void the_user_sees_the_credits_line_information_box_expand_or_reduce() throws Exception {
+		actor.should(seeThat(QuestionInfoRLP.infoRLP(), is(true)), seeThat(QuestionInfoAUD.infoAUD(), is(true)),
+				seeThat(QuestionInfoRCP.infoRCP(), is(true)), seeThat(QuestionInfoTDC.infoTDC(), is(true)));
+	}
+	
+	
+	
+	
+clase para quitar caracteres de una cadena y dejar solo numeros
+
+public class SeeTextInfo {
+
+	public String atBar(String menbanner) {
+
+		String valorbanner = null;
+		int inicioValorbaner = menbanner.indexOf('$');
+		String arraybanner = menbanner.replaceAll(",", "").substring(inicioValorbaner + 1);
+		char[] bannerarray = arraybanner.toCharArray();
+		int acum = 0;
+		for (int x = 0; x < bannerarray.length; x++) {
+			if (bannerarray[x] >= '0' && bannerarray[x] <= '9') {
+				acum = acum + 1;
+			}
+		}
+		char[] Valor1 = new char[acum];
+		for (int x = 0; x < Valor1.length; x++) {
+			Valor1[x] = bannerarray[x];
+		}
+		valorbanner = new String(Valor1);
+		return valorbanner;
+	}
+
+}
+		
+		
