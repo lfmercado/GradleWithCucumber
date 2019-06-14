@@ -6,9 +6,9 @@ import cucumber.api.CucumberOptions;
 import net.serenitybdd.cucumber.CucumberWithSerenity;
 
 @RunWith(CucumberWithSerenity.class)
-@CucumberOptions(features = "src/test/resources/features/ejemplo.feature", glue = "co.com.ejemplo.gradle.step_definitions")
+@CucumberOptions(features = "src/test/resources/features/MyStore.feature", glue = "co.com.ejemplo.gradle.step_definitions")
 
 
-public class GoogleRunner {
+public class MyStoreRunner {
 
 }
