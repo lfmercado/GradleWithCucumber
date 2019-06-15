@@ -1,5 +1,5 @@
 @tag
-Feature: Crear cuenta de usuario y comprar un articulo
+Feature: Create user account and buy an article
   I want to use this template for my feature file
 
   @tag1
